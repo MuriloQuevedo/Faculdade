@@ -10,9 +10,10 @@ main()
     double *pY = &y;
     char *pZ = &z;
 
-    printf("Endereco x =%i - Valor de x = %i\n", pX, *pX);
-    printf("Endereco y =%i - Valor de y = %f\n", pY, *pY);
-    printf("Endereco z =%i - Valor de z = %c\n", pZ, *pZ);
+    // Use %p para imprimir endereços de ponteiros.
+    printf("Endereco x =%p - Valor de x = %i\n", pX, *pX);
+    printf("Endereco y =%p - Valor de y = %f\n", pY, *pY);
+    printf("Endereco z =%p - Valor de z = %c\n", pZ, *pZ);
 
     double soma = *pX + *pY;
     printf("Valor de x = %f\n", soma);
