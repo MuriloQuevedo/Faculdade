@@ -18,7 +18,6 @@ int main()
     if (tamanho < 1 || tamanho > MAX_TAMANHO)
     {
         printf("Tamanho inválido. Deve ser entre 1 e %d.\n", MAX_TAMANHO);
-        return 1;
     }
 
     preencherVetor(vetor, &tamanho); // Passa o endereço de tamanho, vetor é um ponteiro e não precisa de &, feito para mudar os valores, caso queira
