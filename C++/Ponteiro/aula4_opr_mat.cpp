@@ -13,12 +13,14 @@ int main()
     int *ptr1 = &num1; // Ponteiro apontando para num1,  O ponteiro, por si só, não é suficiente; ele precisa apontar para uma variável que armazene um valor
     int *ptr2 = &num2; // Se você tentar usar apenas um ponteiro sem ter uma variável correspondente, não funcionará, pois não haverá valor armazenado para acessar. O ponteiro deve sempre apontar para uma variável válida
 
-    // Solicita ao usuário que digite os números
+
+    // No scanf, passamos o ponteiro diretamente (ptr1) porque ele já contém o endereço da variável.
+    // Não usamos *ptr1, pois isso passaria o valor armazenado, e scanf precisa de um endereço para armazenar o dado
     printf("Digite o primeiro numero: ");
     scanf("%i", ptr1); // Lê o valor diretamente no endereço de num1
 
     printf("Digite o segundo numero: ");
-    scanf("%i", ptr2); // Lê o valor diretamente no endereço de num2
+    scanf("%i", ptr2);
 
     // Chamada das funções e impressão dos resultados em um único printf
     soma(ptr1, ptr2, &res);
