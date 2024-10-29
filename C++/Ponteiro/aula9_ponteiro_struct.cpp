@@ -26,7 +26,7 @@ int main()
     // Loop do menu principal
     do
     {
-        system("cls"); // Limpa a tela (no Windows). No Linux/Unix, usar "clear".
+        system("cls"); // Limpa a tela (
         printf("Menu\n[1]Cadastro\n[2]Mostra\n[3]Sair\nDigite a sua opcao: ");
         scanf("%i", &op); // Lê a opção do usuário
         fflush(stdin);    // Limpa o buffer do teclado
@@ -35,10 +35,10 @@ int main()
         {
         case 1:
             // Aloca mais memória para a agenda para um novo registro
-            aloca(&ag, cont + 1);
+            aloca(&ag, cont + 1); // cont + 1 é usado para indicar que você quer espaço para um novo registro
             // Cadastra os dados para o novo registro
-            cadastro(ag + cont);
-            cont++; // Incrementa o contador de registros
+            cadastro(ag + cont); // ag é o endereço de memoria, e o cont adiciona um numero de registro a ele
+            cont++;              // Incrementa o contador de registros
             break;
 
         case 2:
@@ -57,6 +57,7 @@ void aloca(agenda **p, int tam)
     // Tenta realocar a memória para o número de registros especificado (tam)
     if ((*p = (agenda *)realloc(*p, tam * sizeof(agenda))) == NULL)
     {
+        printf("erro");
         exit(1); // Sai do programa se a alocação falhar
     }
 }
@@ -64,10 +65,8 @@ void aloca(agenda **p, int tam)
 // Função para cadastrar um novo registro na agenda
 void cadastro(agenda *p)
 {
-    static int n = 1; // 'n' é um contador estático que mantém o valor entre chamadas
 
-    p->reg = n; // Define o número de registro atual
-    n++;        // Incrementa o número do próximo registro
+    p->reg = cont + 1; // Definindo o registro como cont + 1, pois o reg começa em 0
 
     printf("\nNome: ");
     gets(p->nome); // Lê o nome do usuário (não recomendado, pois inseguro)
