@@ -1,5 +1,5 @@
-#include <stdio.h>  // Inclui a biblioteca padrão de entrada e saída
-#include <stdlib.h> // Inclui a biblioteca padrão para alocação de memória
+#include <stdio.h>  
+#include <stdlib.h> 
 
 // Estrutura para armazenar os dados da agenda
 typedef struct agenda
@@ -65,11 +65,12 @@ void aloca(agenda **p, int tam)
 // Função para cadastrar um novo registro na agenda
 void cadastro(agenda *p)
 {
+    static int n=1; 
 
-    p->reg = cont + 1; // Definindo o registro como cont + 1, pois o reg começa em 0
+    p->reg = n; 
 
     printf("\nNome: ");
-    gets(p->nome); // Lê o nome do usuário (não recomendado, pois inseguro)
+    gets(p->nome); // Lê o nome do usuário 
     fflush(stdin); // Limpa o buffer do teclado
 
     // Loop para garantir que a nota seja um valor entre 0 e 10
