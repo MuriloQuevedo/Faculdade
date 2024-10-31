@@ -23,13 +23,13 @@ int main()
     agenda *ag = NULL; // Ponteiro para a agenda, inicialmente vazio
     int op, cont = 0;  // 'op' é a opção do menu, 'cont' é o número de registros
 
-    // Loop do menu principal
+    // Loop do menu principal 
     do
     {
-        system("cls"); // Limpa a tela (
+        system("cls"); // Limpa a tela, usar sempre antes de exibir o menu
         printf("Menu\n[1]Cadastro\n[2]Mostra\n[3]Sair\nDigite a sua opcao: ");
         scanf("%i", &op); // Lê a opção do usuário
-        fflush(stdin);    // Limpa o buffer do teclado
+        fflush(stdin);    // Limpa o buffer do teclado, sempre depois de um scanf ou gets
 
         switch (op)
         {
@@ -68,6 +68,7 @@ void cadastro(agenda *p)
     static int n=1; 
 
     p->reg = n; 
+    n++;
 
     printf("\nNome: ");
     gets(p->nome); // Lê o nome do usuário 
