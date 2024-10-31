@@ -42,7 +42,7 @@ void aloca(agenda **p, int tam)
 {
     if((*p=(agenda *)realloc(*p, tam * sizeof(agenda))) == NULL) 
     {
-    printf("erro");
+    printf("erro"); 
     exit(1);
     }
 }
@@ -81,4 +81,4 @@ void mostra(agenda *p, int tam)
     }
     system("PAUSE");
 
-}
+}       
