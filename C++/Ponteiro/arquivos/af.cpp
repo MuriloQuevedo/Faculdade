@@ -155,6 +155,7 @@ void cadastro_hospede(hospede *h, quarto *q, int qq)
     gets(h->nome);
     fflush(stdin);
 
+
     // Solicita a quantidade de acompanhantes, com validação do limite
     do
     {
@@ -250,7 +251,7 @@ void atualiza_quarto(quarto *q, int n_quarto)
         {
             // Posiciona o ponteiro do arquivo no registro atual
             fseek(fq, i * sizeof(quarto), 0);
-
+                                   
             // Lê o registro atual para a estrutura 'q'
             fread(q, sizeof(quarto), 1, fq);
 
@@ -444,7 +445,7 @@ void mostra_quarto(quarto *q)
     else
     {
         for (i = 0; i < qh; i++) // Itera sobre cada hóspede no arquivo.
-        {
+        { 
             fseek(fh, i * sizeof(hospede), 0); // Posiciona o ponteiro no registro do hóspede atual.
             fread(h, sizeof(hospede), 1, fh);  // Lê os dados do hóspede atual para a estrutura `h`.
 
