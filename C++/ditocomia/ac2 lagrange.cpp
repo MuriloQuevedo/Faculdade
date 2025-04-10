@@ -1,88 +1,90 @@
 /*
-    Nome: [SEU NOME AQUI]
-    RA: [SEU RA AQUI]
-    Descrição: Programa que utiliza interpolação polinomial de Lagrange para calcular valores não tabelados de uma função,
-    utilizando ponteiros, chamada por referência e funções modulares.
+   249309	Murilo Prestes de Quevedo
+    249178	Yan Mielke Aletaif
+
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-// Prototipação das funções
-void receberDados(float **x, float **fx, int *n);
-float calcularLagrange(float *x, float *fx, int n, float valorX);
-void liberarMemoria(float *x, float *fx);
+// Função para receber os dados de entrada
+void lerPontos(int quantidade, float *pontosX, float *pontosFX) {
+    for (int i = 0; i < quantidade; i++) {
+        printf("Digite o valor de x[%d]: ", i);
+        scanf("%f", &pontosX[i]);
 
-int main() {
-    float *x = NULL, *fx = NULL;
-    int n;
-    float valorX, resultado;
-    char opcao;
-
-    receberDados(&x, &fx, &n);
-
-    do {
-        printf("\nDigite o valor de x que deseja interpolar: ");
-        scanf("%f", &valorX);
-
-        resultado = calcularLagrange(x, fx, n, valorX);
-        printf("f(%.2f) = %.6f\n", valorX, resultado);
-
-        printf("Deseja interpolar outro valor? (s/n): ");
-        scanf(" %c", &opcao);
-    } while (opcao == 's' || opcao == 'S');
-
-    liberarMemoria(x, fx);
-
-    return 0;
-}
-
-// Função para receber os dados dos pontos e armazenar dinamicamente
-void receberDados(float **x, float **fx, int *n) {
-    int i;
-
-    printf("Informe a quantidade de pontos: ");
-    scanf("%d", n);
-
-    *x = (float *)malloc(*n * sizeof(float));
-    *fx = (float *)malloc(*n * sizeof(float));
-
-    if (*x == NULL || *fx == NULL) {
-        printf("Erro ao alocar memória.\n");
-        exit(1);
-    }
-
-    printf("\nInforme os pares (x, f(x)):\n");
-    for (i = 0; i < *n; i++) {
-        printf("x[%d]: ", i);
-        scanf("%f", *x + i);
-        printf("f(x[%d]): ", i);
-        scanf("%f", *fx + i);
+        printf("Digite o valor de f(x[%d]): ", i);
+        scanf("%f", &pontosFX[i]);
     }
 }
 
-// Função que calcula a interpolação de Lagrange
-float calcularLagrange(float *x, float *fx, int n, float valorX) {
+// Função para calcular Lk(x)
+float calcularLk(int k, int totalPontos, float x, float *pontosX) {
+    float resultado = 1.0f;
+    for (int i = 0; i < totalPontos; i++) {
+        if (i != k) {
+            resultado *= (x - pontosX[i]) / (pontosX[k] - pontosX[i]);
+        }
+    }
+    return resultado;
+}
+
+// Função para calcular P(x) usando interpolação de Lagrange
+float interpolarLagrange(int totalPontos, float x, float *pontosX, float *pontosFX) {
     float resultado = 0.0f;
 
-    for (int i = 0; i < n; i++) {
-        float Li = 1.0f;
-
-        for (int j = 0; j < n; j++) {
-            if (j != i) {
-                Li *= (valorX - *(x + j)) / (*(x + i) - *(x + j));
-            }
-        }
-
-        resultado += Li * (*(fx + i));
-        printf("L%d(%.2f) = %.6f\n", i, valorX, Li);
+    for (int k = 0; k < totalPontos; k++) {
+        float Lk = calcularLk(k, totalPontos, x, pontosX);
+        printf("L%d(%.2f) = %.4f\n", k, x, Lk);
+        resultado += pontosFX[k] * Lk;
     }
 
     return resultado;
 }
 
-// Liberação da memória alocada
-void liberarMemoria(float *x, float *fx) {
-    free(x);
-    free(fx);
+int main() {
+    int grauPolinomio, quantidadePontos;
+    float *pontosX = NULL, *pontosFX = NULL;
+    float valorParaInterpolar, resultado;
+    char continuar;
+
+    // Solicita o grau do polinômio
+    printf("Informe o grau do polinômio desejado: ");
+    scanf("%d", &grauPolinomio);
+
+    quantidadePontos = grauPolinomio + 1;
+
+    // Alocação dinâmica dos vetores
+    pontosX = (float *)malloc(quantidadePontos * sizeof(float));
+    pontosFX = (float *)malloc(quantidadePontos * sizeof(float));
+
+    if (pontosX == NULL || pontosFX == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return 1;
+    }
+
+    // Leitura dos pontos
+    printf("\n--- Cadastro dos Pontos ---\n");
+    lerPontos(quantidadePontos, pontosX, pontosFX);
+
+    // Loop de cálculo
+    do {
+        printf("\nDigite o valor de x para interpolar f(x): ");
+        scanf("%f", &valorParaInterpolar);
+
+        resultado = interpolarLagrange(quantidadePontos, valorParaInterpolar, pontosX, pontosFX);
+        printf("Resultado: f(%.2f) = %.4f\n", valorParaInterpolar, resultado);
+
+        printf("\nDeseja interpolar outro valor? (s/n): ");
+        scanf(" %c", &continuar);
+
+    } while (continuar == 's' || continuar == 'S');
+
+    // Liberação da memória
+    free(pontosX);
+    free(pontosFX);
+
+    printf("\nPrograma encerrado. Obrigado por utilizar!\n");
+    system("pause");
+    return 0;
 }
