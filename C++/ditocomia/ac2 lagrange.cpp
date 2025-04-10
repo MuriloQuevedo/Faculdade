@@ -1,15 +1,16 @@
 /*
-   249309	Murilo Prestes de Quevedo
+    249309 Murilo Prestes de Quevedo
     249178	Yan Mielke Aletaif
 
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 
 // Função para receber os dados de entrada
-void lerPontos(int quantidade, float *pontosX, float *pontosFX) {
-    for (int i = 0; i < quantidade; i++) {
+void lerPontos(int quantidade, float *pontosX, float *pontosFX)
+{
+    for (int i = 0; i < quantidade; i++)
+    {
         printf("Digite o valor de x[%d]: ", i);
         scanf("%f", &pontosX[i]);
 
@@ -19,10 +20,13 @@ void lerPontos(int quantidade, float *pontosX, float *pontosFX) {
 }
 
 // Função para calcular Lk(x)
-float calcularLk(int k, int totalPontos, float x, float *pontosX) {
+float calcularLk(int k, int totalPontos, float x, float *pontosX)
+{
     float resultado = 1.0f;
-    for (int i = 0; i < totalPontos; i++) {
-        if (i != k) {
+    for (int i = 0; i < totalPontos; i++)
+    {
+        if (i != k)
+        {
             resultado *= (x - pontosX[i]) / (pontosX[k] - pontosX[i]);
         }
     }
@@ -30,10 +34,12 @@ float calcularLk(int k, int totalPontos, float x, float *pontosX) {
 }
 
 // Função para calcular P(x) usando interpolação de Lagrange
-float interpolarLagrange(int totalPontos, float x, float *pontosX, float *pontosFX) {
+float interpolarLagrange(int totalPontos, float x, float *pontosX, float *pontosFX)
+{
     float resultado = 0.0f;
 
-    for (int k = 0; k < totalPontos; k++) {
+    for (int k = 0; k < totalPontos; k++)
+    {
         float Lk = calcularLk(k, totalPontos, x, pontosX);
         printf("L%d(%.2f) = %.4f\n", k, x, Lk);
         resultado += pontosFX[k] * Lk;
@@ -42,7 +48,8 @@ float interpolarLagrange(int totalPontos, float x, float *pontosX, float *pontos
     return resultado;
 }
 
-int main() {
+int main()
+{
     int grauPolinomio, quantidadePontos;
     float *pontosX = NULL, *pontosFX = NULL;
     float valorParaInterpolar, resultado;
@@ -58,7 +65,8 @@ int main() {
     pontosX = (float *)malloc(quantidadePontos * sizeof(float));
     pontosFX = (float *)malloc(quantidadePontos * sizeof(float));
 
-    if (pontosX == NULL || pontosFX == NULL) {
+    if (pontosX == NULL || pontosFX == NULL)
+    {
         printf("Erro ao alocar memória!\n");
         return 1;
     }
@@ -68,7 +76,8 @@ int main() {
     lerPontos(quantidadePontos, pontosX, pontosFX);
 
     // Loop de cálculo
-    do {
+    do
+    {
         printf("\nDigite o valor de x para interpolar f(x): ");
         scanf("%f", &valorParaInterpolar);
 
